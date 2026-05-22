@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لولو الكيوت 💖</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ffe5ec, #ffc2d1);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* قلوب متطايرة بالخلفية */
+        .heart-bg {
+            position: absolute;
+            color: rgba(255, 75, 110, 0.3);
+            font-size: 20px;
+            animation: floatUp 6s linear infinite; /* تم تصحيح الفراغ هنا */
+            bottom: -50px;
+            z-index: 1;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 35px 25px;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.2);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            z-index: 10;
+            border: 2px solid #fff;
+            transition: all 0.5s ease;
+        }
+
+        h1 {
+            color: #ff477e;
+            font-size: 26px;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            position: relative;
+            min-height: 60px;
+        }
+
+        button {
+            padding: 12px 35px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .btn-yes {
+            background-color: #ff477e;
+            color: white;
+        }
+
+        .btn-yes:hover {
+            background-color: #ff7096;
+            transform: scale(1.05);
+        }
+
+        .btn-no {
+            background-color: #9381ff;
+            color: white;
+            position: absolute;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .emoji {
+            font-size: 50px;
+            margin-bottom: 15px;
+            display: block;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .huge-number {
+            font-size: 36px;
+            font-weight: 900;
+            color: #ff477e;
+            margin: 15px 0;
+            display: block;
+            text-shadow: 2px 2px #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card" id="page1">
+        <span class="emoji">🌸</span>
+        <h1>انتي لولو؟ 🤔✨</h1>
+        <div class="btn-container">
+            <button class="btn-yes" onclick="nextPage(2)">اي 🙈</button>
+        </div>
+    </div>
+
+    <div class="card hidden" id="page2">
+        <span class="emoji">🥺💞</span>
+        <h1>تحبيني؟ 🙈👉👈</h1>
+        <div class="btn-container" id="quiz-container">
+            <button class="btn-yes" id="yesBtn" onclick="goToFinal()">اي 🏛️</button>
+            <button class="btn-no" id="noBtn" onmouseover="moveNoButton()" onclick="moveNoButton()">لا 😢</button>
+        </div>
+    </div>
+
+    <div class="card hidden" id="page3">
+        <span class="emoji">👑💖</span>
+        <h1>اني هم اموت عليج بيبي 🥺❤️</h1>
+        <p style="color: #666; font-size: 16px;">نسبة الحب مالتنا:</p>
+        <span class="huge-number">1,000,000% ♾️</span>
+        <p style="color: #ff477e; font-weight: bold; font-size: 18px;">الله يخليج الية يا أحلى لولو بالكون 🌸</p>
+    </div>
+
+    <script>
+        function createHearts() {
+            for (let i = 0; i < 20; i++) {
+                let heart = document.createElement('div');
+                heart.classList.add('heart-bg');
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                heart.style.fontSize = Math.random() * 15 + 15 + 'px';
+                document.body.appendChild(heart);
+            }
+        }
+        createHearts();
+
+        function nextPage(pageNum) {
+            document.getElementById('page1').classList.add('hidden');
+            document.getElementById('page2').classList.remove('hidden');
+        }
+
+        let noClickCount = 0;
+        function moveNoButton() {
+            noClickCount++;
+            const noBtn = document.getElementById('noBtn');
+            const container = document.getElementById('quiz-container');
+            
+            const maxWidth = container.clientWidth - noBtn.clientWidth;
+            const maxHeight = 150;
+
+            const randomX = Math.floor(Math.random() * maxWidth);
+            const randomY = Math.floor(Math.random() * maxHeight) - 50;
+
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+
+            if (noClickCount >= 4) {
+                noBtn.style.display = 'none';
+            }
+        }
+
+        function goToFinal() {
+            document.getElementById('page2').classList.add('hidden');
+            document.getElementById('page3').classList.remove('hidden');
+            
+            setInterval(() => {
+                let heart = document.createElement('div');
+                heart.classList.add('heart-bg');
+                heart.innerHTML = '💖';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.fontSize = Math.random() * 20 + 20 + 'px';
+                document.body.appendChild(heart);
+            }, 300);
+        }
+    </script>
+</body>
+</html>
